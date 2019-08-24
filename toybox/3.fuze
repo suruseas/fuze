@@ -1,0 +1,15 @@
+CLS
+apples = 10
+LOOP
+	CLS
+	INK = GREEN
+	PAPER = BLACK
+	PRINT "I have "; apples; "Apples."
+	WAIT (0.5)
+	PRINT "If we eat one... then..."
+	apples = apples - 2
+	WAIT (1)
+REPEAT UNTIL apples = 0
+CLS
+PRINT "I have no Apples... And a tummy ache..."
+END

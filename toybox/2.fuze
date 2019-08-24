@@ -1,0 +1,8 @@
+CLS
+LOOP
+	FONTSIZE (5)
+	INK = RANDOM(30)
+	PAPER = 27
+	PRINT "Hello World";
+	WAIT (0.1)
+REPEAT

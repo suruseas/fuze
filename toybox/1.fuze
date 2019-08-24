@@ -1,0 +1,4 @@
+loop
+print "hello world";
+wait(1)
+repeat

@@ -1,0 +1,93 @@
+CLS
+
+center_x = GWIDTH / 2
+center_y = GHEIGHT / 2
+radius = GHEIGHT / 2 / 2
+
+DIM ear_center(2, 2)
+ear_center(0, 0) = center_x - radius
+ear_center(0, 1) = center_y + radius
+ear_center(1, 0) = center_x + radius
+ear_center(1, 1) = center_y + radius
+
+eye_radius = radius / 4
+
+DIM eye_center(2, 2)
+eye_center(0, 0) = center_x - eye_radius 
+eye_center(0, 1) = center_y + eye_radius
+eye_center(1, 0) = center_x + eye_radius
+eye_center(1, 1) = center_y + eye_radius
+
+LOOP
+	CLS2
+	PROC DrawBar
+	PROC DrawEyeBase
+	PROC DrawEye
+	//WAIT (0.05)
+	UPDATE
+REPEAT
+
+END
+
+DEF FN GetRadian(x1, y1, x2, y2)
+	radian = ATAN(( y2 - y1 ) / ( x2 - x1 ) )
+=radian
+
+DEF PROC DrawBar
+	COLOR = PINK
+	CIRCLE ( center_x, center_y, radius, 1)
+	CIRCLE ( ear_center(0, 0), ear_center(0, 1), radius / 2, 1)
+	CIRCLE ( ear_center(1, 0), ear_center(1, 1), radius / 2, 1)
+ENDPROC
+
+DEF PROC DrawEyeBase
+	COLOR = WHITE
+	CIRCLE ( eye_center(0, 0), eye_center(0, 1) , eye_radius, 1)
+	CIRCLE ( eye_center(1, 0), eye_center(1, 1),  eye_radius, 1)
+ENDPROC
+
+DEF PROC DrawEye
+
+	mouse_x = MOUSEX
+	mouse_y = MOUSEY
+
+	radian1 = FN GetRadian(mouse_x, mouse_y, eye_center(0, 0), eye_center(0, 1))
+	radian2 = FN GetRadian(mouse_x, mouse_y, eye_center(1, 0), eye_center(1, 1))
+	
+	COLOR = RED
+	PRINT radian1
+	PRINT radian2
+	
+	direction1 = -1
+	direction2 = -1
+
+	IF mouse_x > eye_center(0, 0) THEN
+		direction1 = 1
+	ENDIF
+	
+	IF mouse_x > eye_center(1, 0) THEN
+		direction2 = 1
+	ENDIF
+	
+	in_circle1 = FN InCircle(mouse_x, mouse_y, eye_center(0, 0), eye_center(0, 1), eye_radius)
+	in_circle2 = FN InCircle(mouse_x, mouse_y, eye_center(1, 0), eye_center(1, 1), eye_radius)
+	
+	COLOR = YELLOW
+	IF in_circle1 THEN
+		CIRCLE ( mouse_x, mouse_y, radius / 10, 1)
+	ELSE
+		CIRCLE ( eye_center(0, 0) + ( COS(radian1) * eye_radius * direction1) ,  eye_center(0, 1) + ( SIN(radian1) * eye_radius * direction1), radius / 10, 1)
+	ENDIF	
+//	IF in_circle2 THEN
+//		CIRCLE ( mouse_x, mouse_y, radius / 10, 1)
+//	ELSE
+//		CIRCLE ( eye_center(1, 0) + ( COS(radian2) * eye_radius * direction2) ,  eye_center(1, 1) + ( SIN(radian2) * eye_radius * direction2), radius / 10, 1)
+//	END
+ENDPROC
+
+DEF FN InCircle(x1, y1, x2, y2, radius)
+	result = FALSE
+	IF SQRT(ABS(x2  - x1)) + SQRT(ABS(y2 - y1)) < SQRT(radius) THEN
+		result = TRUE
+	ENDIF
+= result

@@ -1,0 +1,17 @@
+score = 0
+CLS
+PRINT "Hello and wellcome to the quiz."
+WAIT (2)
+PRINT "Please answer in lower case."
+WAIT (2)
+INK = YELLOW
+PRINT "Q1. Which elemental type is Picachu? "
+INPUT answer$
+IF answer$ = "electric" THEN
+	PRINT "Correct! Picachu is an electric type! "
+	score = score + 1
+	WAIT (2)
+ELSE
+	PRINT "Incorrect!"
+	WAIT (2)
+ENDIF
