@@ -70,4 +70,5 @@ Vagrant.configure("2") do |config|
       "--paravirtprovider", "kvm",
     ]
   end
+  config.vm.synced_folder "./toybox", "/home/vagrant/Desktop/fuze-basic/toybox"
 end
